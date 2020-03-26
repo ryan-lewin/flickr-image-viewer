@@ -25,11 +25,7 @@ $(document).ready(() => {
     showImage = (imgSource) => {
         const IMAGE_CONTAINER = document.getElementById('image-container');
         const IMAGE_FIG = document.createElement('figure');
-        let newImage = `
-            <figure id="thumbnail-container">
-            <img src=${imgSource} alt="" id="thumbnail">
-            </figure>
-        `
+        let newImage = `<figure id="thumbnail-container"><img src=${imgSource} alt="" id="thumbnail"></figure>`
         IMAGE_FIG.innerHTML = newImage;
         IMAGE_CONTAINER.appendChild(IMAGE_FIG);
         IMAGE_FIG.addEventListener("click", () => {
@@ -38,19 +34,15 @@ $(document).ready(() => {
     }
 
     modalImage = (imgSource) => {
-        const Modal = document.getElementById('modal');
-        const ModalImg = document.getElementById('modal-img')
+        const MODAL = document.getElementById('modal');
+        const MODAL_IMG = document.getElementById('modal-img')
         const ModalClose = document.getElementById('modal-close');
-        Modal.style.display = 'flex';
-        const Img = document.createElement('IMG');
-        // const Tag = document.createElement('P');
-        Img.src = imgSource;
-        // Tag.innerHTML = imgTag;
-        ModalImg.appendChild(Img)
-        // ModalImg.appendChild(Tag)
+        MODAL.style.display = 'flex';
+        let newImage = `<figure id="modal-img"><img src=${imgSource} alt=""></figure>`
+        MODAL_IMG.innerHTML = newImage;
         ModalClose.addEventListener("click", () =>  {
-            ModalImg.innerHTML = "";
-            Modal.style.display = 'none';
+            MODAL_IMG.innerHTML = "";
+            MODAL.style.display = 'none';
         })
     }
 
