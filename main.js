@@ -32,6 +32,26 @@ $(document).ready(() => {
         `
         IMAGE_FIG.innerHTML = newImage;
         IMAGE_CONTAINER.appendChild(IMAGE_FIG);
+        IMAGE_FIG.addEventListener("click", () => {
+            modalImage(imgSource)
+        });
+    }
+
+    modalImage = (imgSource) => {
+        const Modal = document.getElementById('modal');
+        const ModalImg = document.getElementById('modal-img')
+        const ModalClose = document.getElementById('modal-close');
+        Modal.style.display = 'flex';
+        const Img = document.createElement('IMG');
+        // const Tag = document.createElement('P');
+        Img.src = imgSource;
+        // Tag.innerHTML = imgTag;
+        ModalImg.appendChild(Img)
+        // ModalImg.appendChild(Tag)
+        ModalClose.addEventListener("click", () =>  {
+            ModalImg.innerHTML = "";
+            Modal.style.display = 'none';
+        })
     }
 
     $(".nav-link").click(function () {

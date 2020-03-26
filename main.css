@@ -1,6 +1,47 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 1em 0em 4em 0em;
+}
 
 #image-container {
     display: flex;
-    /* flex-direction: column; */
     flex-wrap: wrap;
+}
+
+#modal {
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    top: 0;
+    position: fixed;
+    flex-direction: column;
+}
+
+#modal-close {
+    font-weight: bold;
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+    padding: .5em 1em 0 0;
+    align-self: flex-end;
+}
+
+#modal-img {
+    width: 80vw;
+    height: 90vw;
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    justify-content: space-around;
 }
