@@ -1,4 +1,5 @@
 $(document).ready(() => {
+    let recentlyViewed = [];
     const API_KEY = 'd288c5134f7f7b7c7703b2458c40c277';
 
     flickrSearch = (term, imgNo) => {
@@ -34,6 +35,7 @@ $(document).ready(() => {
     }
 
     modalImage = (imgSource) => {
+        recentlyViewed.push(imgSource)
         const MODAL = document.getElementById('modal');
         const MODAL_IMG = document.getElementById('modal-img')
         const ModalClose = document.getElementById('modal-close');
@@ -41,14 +43,39 @@ $(document).ready(() => {
         let newImage = `<figure id="modal-img"><img src=${imgSource} alt=""></figure>`
         MODAL_IMG.innerHTML = newImage;
         ModalClose.addEventListener("click", () =>  {
-            MODAL_IMG.innerHTML = "";
+            MODAL_IMG.innerHTML = '';
             MODAL.style.display = 'none';
         })
+    }
+
+    showRecentlyViewed = () => {
+        const IMAGE_CONTAINER = document.getElementById('image-container');
+        IMAGE_CONTAINER.innerHTML = ''
+        recentlyViewed.forEach((imgSource) => {
+            let newImage = `<figure id="thumbnail-container"><img src=${imgSource} alt="" id="thumbnail"></figure>`
+            const IMAGE_FIG = document.createElement('figure');
+            IMAGE_FIG.innerHTML = newImage;
+            IMAGE_CONTAINER.appendChild(IMAGE_FIG);
+            IMAGE_FIG.addEventListener("click", () => {
+                modalImage(imgSource)
+            });
+        })
+        // let newImage = `<figure id="thumbnail-container"><img src=${imgSource} alt="" id="thumbnail"></figure>`
+        // IMAGE_FIG.innerHTML = newImage;
+        // IMAGE_CONTAINER.appendChild(IMAGE_FIG);
+        // IMAGE_FIG.addEventListener("click", () => {
+        //     modalImage(imgSource)
+        // });
     }
 
     $(".nav-link").click(function () {
         flickrSearch($(this).text(), 12);
      });
+
+    $(".recently-viewed").click(function () {
+        showRecentlyViewed();
+    });
+
 
     window.onload = flickrSearch('Landscapes', 12);
 
