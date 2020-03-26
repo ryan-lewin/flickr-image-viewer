@@ -3,11 +3,11 @@ $(document).ready(() => {
 
     flickrSearch = (term, imgNo) => {
         const STR = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${API_KEY}&text=${term}&per_page=20&format=json&nojsoncallback=1`
-        imgIds = []
+        const IMAGE_CONTAINER = document.getElementById('image-container');
+        IMAGE_CONTAINER.innerHTML = '';
         $.get(STR, (data) => {
             for(let i = 0; i < imgNo; i++) {
                 flickrSize(data.photos.photo[i].id, 3);
-                // imgIds.push(data.photos.photo[i].id)
             }
             
         })
@@ -34,6 +34,10 @@ $(document).ready(() => {
         IMAGE_CONTAINER.appendChild(IMAGE_FIG);
     }
 
-    window.onload = flickrSearch('Landscapes', 10);
+    $(".nav-link").click(function () {
+        flickrSearch($(this).text(), 12);
+     });
+
+    window.onload = flickrSearch('Landscapes', 12);
 
 })
