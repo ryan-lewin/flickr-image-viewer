@@ -8,19 +8,29 @@ $(document).ready(() => {
         IMAGE_CONTAINER.innerHTML = '';
         $.get(STR, (data) => {
             for(let i = 0; i < imgNo; i++) {
-                flickrSize(data.photos.photo[i].id, 3);
+                flickrSize(data.photos.photo[i].id);
             }
             
         })
     }
 
-    flickrSize = (id, size) => {
+    flickrSize = (id) => {
         const STR = `https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&format=json&nojsoncallback=1&api_key=${API_KEY}&photo_id=${id}`
         $.get(STR, (data) => {
-            let source = data.sizes.size[size].source;
-            show = () => {showImage(source)}
-            show()
+            assignSizes(data.sizes.size)
         })
+    }
+
+    assignSizes = (data) => {
+        let mainSize = data[0].source, recentSize = data[0].source;
+        let labels = [];
+        data.forEach((label) => {
+            labels.push(label.label)
+        })
+        if(labels.includes("Small")) {mainSize = data[labels.indexOf("Small")].source}
+        if(labels.includes("Large Square")) {recentSize = data[labels.indexOf("Small")].source}
+        showImage(mainSize)
+        showRecentlyViewed(recentSize)
     }
 
     showImage = (imgSource) => {
@@ -44,28 +54,23 @@ $(document).ready(() => {
         MODAL_IMG.innerHTML = newImage;
         ModalClose.addEventListener("click", () =>  {
             MODAL_IMG.innerHTML = '';
+            showRecentlyViewed();
             MODAL.style.display = 'none';
         })
     }
 
     showRecentlyViewed = () => {
-        const IMAGE_CONTAINER = document.getElementById('image-container');
-        IMAGE_CONTAINER.innerHTML = ''
+        const RECENTLY_VIEWED = document.getElementById('recently-viewed');
+        RECENTLY_VIEWED.innerHTML = ''
         recentlyViewed.forEach((imgSource) => {
             let newImage = `<figure id="thumbnail-container"><img src=${imgSource} alt="" id="thumbnail"></figure>`
             const IMAGE_FIG = document.createElement('figure');
             IMAGE_FIG.innerHTML = newImage;
-            IMAGE_CONTAINER.appendChild(IMAGE_FIG);
+            RECENTLY_VIEWED.appendChild(IMAGE_FIG);
             IMAGE_FIG.addEventListener("click", () => {
                 modalImage(imgSource)
             });
         })
-        // let newImage = `<figure id="thumbnail-container"><img src=${imgSource} alt="" id="thumbnail"></figure>`
-        // IMAGE_FIG.innerHTML = newImage;
-        // IMAGE_CONTAINER.appendChild(IMAGE_FIG);
-        // IMAGE_FIG.addEventListener("click", () => {
-        //     modalImage(imgSource)
-        // });
     }
 
     $(".nav-link").click(function () {

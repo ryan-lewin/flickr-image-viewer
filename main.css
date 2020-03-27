@@ -15,6 +15,11 @@ main {
     flex-wrap: wrap;
 }
 
+#recently-viewed {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 #modal {
     width: 100vw;
     height: 100vh;
@@ -46,6 +51,5 @@ main {
     justify-content: space-around;
 }
 
-#modal-close {
-    
-}
+
+
