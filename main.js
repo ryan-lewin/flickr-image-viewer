@@ -67,7 +67,7 @@ $(document).ready(() => {
 
     showRecentlyViewed = (imgSources, caption) => {
         const RECENTLY_VIEWED = document.getElementById('recently-viewed');
-        RECENTLY_VIEWED.innerHTML = ''
+        // RECENTLY_VIEWED.innerHTML = ''
         recentlyViewed.forEach((imgSource) => {
             let newImage = `
                 <figure id="thumbnail-container">

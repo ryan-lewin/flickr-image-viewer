@@ -5,19 +5,25 @@
 
 main {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    flex-direction: row;
     margin: 1em 0em 4em 0em;
+}
+
+#nav-links {
+    display: flex;
+    flex-direction: column;
 }
 
 #image-container {
     display: flex;
     flex-wrap: wrap;
+    width: 60vw;
 }
 
 #recently-viewed {
     display: flex;
     flex-wrap: wrap;
+    width: 30vw;
 }
 
 #modal {
