@@ -27,19 +27,14 @@ $(document).ready(() => {
             labels.push(label.label)
         })
         if(labels.includes("Small")) {imgSources.small = data[labels.indexOf("Small")].source}
-        if(labels.includes("Large Square")) {imgSources.largeSquare = data[labels.indexOf("Small")].source}
+        if(labels.includes("Large Square")) {imgSources.largeSquare = data[labels.indexOf("Large Square")].source}
         showImage(imgSources, caption)
-        showRecentlyViewed(imgSources.largeSquare)
     }
 
     showImage = (imgSources, caption) => {
         const IMAGE_CONTAINER = document.getElementById('image-container');
         const IMAGE_FIG = document.createElement('figure');
-        let newImage = `
-            <figure id="thumbnail-container">
-                <img src=${imgSources.small} alt="" id="thumbnail">
-                <h4>${caption}</h4>
-            </figure>`
+        let newImage = `<img src=${imgSources.small} alt="" id="thumbnail"><h4>${caption}</h4>`
         IMAGE_FIG.innerHTML = newImage;
         IMAGE_CONTAINER.appendChild(IMAGE_FIG);
         IMAGE_FIG.addEventListener("click", () => {
@@ -47,38 +42,46 @@ $(document).ready(() => {
         });
     }
 
-    modalImage = (imgSources, caption, fromRecent = false) => {
-        if(!fromRecent) {recentlyViewed.push(imgSources.largeSquare)}
+    addRecent = (viewedImage, caption) => {
+        for(let i = 0; i < recentlyViewed.length; i++) {
+            if(recentlyViewed[i].image === viewedImage) {
+                console.log(viewedImage)
+                return
+            }
+        }
+        if(recentlyViewed.length < 5){
+            recentlyViewed.unshift({image: viewedImage, caption: caption})
+        } else {
+            recentlyViewed.pop()
+            recentlyViewed.unshift({image: viewedImage, caption: caption})
+        }
+    }
+
+    modalImage = (imgSources, caption) => {
+        console.log(imgSources.small, imgSources.largeSquare)
+        addRecent(imgSources.largeSquare, caption)
         const MODAL = document.getElementById('modal');
         const MODAL_IMG = document.getElementById('modal-img')
         const ModalClose = document.getElementById('modal-close');
         MODAL.style.display = 'flex';
-        let newImage = `
-            <figure id="modal-img">
-                <img src=${imgSources.small} alt="">
-                <h4>${caption}</h4>
-            </figure>`
+        let newImage = `<img src=${imgSources.small} alt=""> <h4>${caption}</h4>`
         MODAL_IMG.innerHTML = newImage;
         ModalClose.addEventListener("click", () =>  {
-            showRecentlyViewed(imgSources, caption);
+            showRecentlyViewed();
             MODAL.style.display = 'none';
         })
     }
 
-    showRecentlyViewed = (imgSources, caption) => {
+    showRecentlyViewed = () => {
         const RECENTLY_VIEWED = document.getElementById('recently-viewed');
-        // RECENTLY_VIEWED.innerHTML = ''
-        recentlyViewed.forEach((imgSource) => {
-            let newImage = `
-                <figure id="thumbnail-container">
-                    <img src=${imgSource} alt="">
-                    <h4>${caption}</h4>
-                </figure>`
+        RECENTLY_VIEWED.innerHTML = ''
+        recentlyViewed.forEach((img) => {
+            let newImage = `<img src=${img.image} alt=""><h4>${img.caption}</h4>`
             const IMAGE_FIG = document.createElement('figure');
             IMAGE_FIG.innerHTML = newImage;
             RECENTLY_VIEWED.appendChild(IMAGE_FIG);
             IMAGE_FIG.addEventListener("click", () => {
-                modalImage(imgSources, caption, true)
+                modalImage(img.image, img.caption)
             });
         })
     }
