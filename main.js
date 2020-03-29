@@ -2,26 +2,34 @@ $(document).ready(() => {
     let recentlyViewed = [];
     const API_KEY = 'd288c5134f7f7b7c7703b2458c40c277';
     const WEATHER_API ='86e0ddb65b1757ceff55199a8e11c715'
-    let weather = []
+    let weather = [];
 
-    getWeather = () => {
-        const COORDINATES = {
-            Brisbane: {lat: -27.470125, long: 153.021072, weather: 0},
-            Sydney: {lat: -33.865143, long: 151.209900, weather: 0},
-            Melbourne: {lat: -37.840935, long: 144.946457, weather: 0},
-            Adelaide: {lat: -34.921230, long: 138.599503, weather: 0},
-            Perth: {lat: -31.953512, long: 115.857048, weather: 0},
-        }
-        // const STR = `https://api.darksky.net/forecast/86e0ddb65b1757ceff55199a8e11c715/${COORDINATES.city.lat},${COORDINATES.city.lat}?units=si`
+    getWeather = (lat, long, i) => {
+        const LINKS = document.getElementsByClassName('nav-link')
+        const STR = `https://api.darksky.net/forecast/86e0ddb65b1757ceff55199a8e11c715/${lat},${long}?units=si`
         $.get(STR, (data) => {
-            // addWeather(data)
-            console.log(city)
+            appendWeather(data, i)
         })
     }
 
-    addWeather = (data) => {
-        // const LINKS = document.getElementById('nav-links')
-        console.log(data)
+    appendWeather = (data, i) => {
+        let temp = data.currently.temperature;
+        const LINKS = document.getElementsByClassName('nav-link')
+        LINKS[i].innerHTML = `${LINKS[i].innerHTML}<br>${temp}&#8451;`
+    }
+
+    updateWeather = () => {
+        const LINKS = document.getElementsByClassName('nav-link')
+        let locations = [
+            {city: 'Sydney', lat: -33.865143, long: 151.209900},
+            {city: 'Melbourne', lat: -37.840935, long: 144.946457},
+            {city: 'Brisbane', lat: -27.470125, long: 153.021072},
+            {city: 'Adelaide', lat: -34.921230, long: 138.599503},
+            {city: 'Perth', lat: -31.953512, long: 115.857048}
+        ]
+        for(let i = 0; i < LINKS.length; i++) {
+            getWeather(locations[i].lat, locations[i].long, i)
+        }
     }
 
     flickrSearch = (term, imgNo) => {
@@ -123,12 +131,14 @@ $(document).ready(() => {
     }
 
     $(".nav-link").click(function () {
-        flickrSearch($(this).text(), 12);
+        flickrSearch($(this).attr('name'), 12);
      });
 
     $(".recently-viewed").click(function () {
         showRecentlyViewed();
     });
+
+    updateWeather()
 
     window.onload = flickrSearch('Australian Cities', 12);
 })
