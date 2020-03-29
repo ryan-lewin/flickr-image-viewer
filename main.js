@@ -1,12 +1,28 @@
 $(document).ready(() => {
     let recentlyViewed = [];
     const API_KEY = 'd288c5134f7f7b7c7703b2458c40c277';
+    const WEATHER_API ='86e0ddb65b1757ceff55199a8e11c715'
+    let weather = []
 
-    // let string = 'https://api.openaq.org/v1/cities'
-    // let string = 'https://api.openaq.org/v1/cities/AU'
-    // $.get(string, (data) => {
-    //     console.log(data)
-    // })
+    getWeather = () => {
+        const COORDINATES = {
+            Brisbane: {lat: -27.470125, long: 153.021072, weather: 0},
+            Sydney: {lat: -33.865143, long: 151.209900, weather: 0},
+            Melbourne: {lat: -37.840935, long: 144.946457, weather: 0},
+            Adelaide: {lat: -34.921230, long: 138.599503, weather: 0},
+            Perth: {lat: -31.953512, long: 115.857048, weather: 0},
+        }
+        // const STR = `https://api.darksky.net/forecast/86e0ddb65b1757ceff55199a8e11c715/${COORDINATES.city.lat},${COORDINATES.city.lat}?units=si`
+        $.get(STR, (data) => {
+            // addWeather(data)
+            console.log(city)
+        })
+    }
+
+    addWeather = (data) => {
+        // const LINKS = document.getElementById('nav-links')
+        console.log(data)
+    }
 
     flickrSearch = (term, imgNo) => {
         const STR = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${API_KEY}&text=${term}&per_page=20&format=json&nojsoncallback=1`
@@ -41,7 +57,7 @@ $(document).ready(() => {
     showImage = (imgSources) => {
         const IMAGE_CONTAINER = document.getElementById('image-container');
         const IMAGE_FIG = document.createElement('figure');
-        let newImage = `<img src=${imgSources.small} alt="" id="thumbnail"><h4>${imgSources.caption}</h4>`
+        let newImage = `<img src=${imgSources.small} alt="" id="thumbnail"><p>${imgSources.caption}<p>`
         IMAGE_FIG.innerHTML = newImage;
         IMAGE_CONTAINER.appendChild(IMAGE_FIG);
         IMAGE_FIG.addEventListener("click", () => {
@@ -69,7 +85,7 @@ $(document).ready(() => {
         const MODAL_IMG = document.getElementById('modal-img')
         const ModalClose = document.getElementById('modal-close');
         MODAL.style.display = 'flex';
-        let newImage = `<img src=${imgSources.large} alt="" id="modal-image"> <h4>${imgSources.caption}</h4>`
+        let newImage = `<img src=${imgSources.large} alt="" id="modal-image"> <h2>${imgSources.caption}</h4>`
         MODAL_IMG.innerHTML = newImage;
         ModalClose.addEventListener("click", () =>  {
             showRecentlyViewed(imgSources);
@@ -83,7 +99,7 @@ $(document).ready(() => {
         const MODAL_IMG = document.getElementById('modal-img')
         const ModalClose = document.getElementById('modal-close');
         MODAL.style.display = 'flex';
-        let newImage = `<img src=${img} alt="" id="modal-img"> <h4>${caption}</h4>`
+        let newImage = `<img src=${img} alt="" id="modal-img"> <h2>${caption}</h4>`
         MODAL_IMG.innerHTML = newImage;
         ModalClose.addEventListener("click", () =>  {
             showRecentlyViewed(imgSources);
@@ -96,7 +112,7 @@ $(document).ready(() => {
         const RECENTLY_VIEWED = document.getElementById('recently-viewed');
         RECENTLY_VIEWED.innerHTML = ''
         recentlyViewed.forEach((img) => {
-            let newImage = `<img src=${img.largeSquare} alt=""><h4>${img.caption}</h4>`
+            let newImage = `<img src=${img.largeSquare} alt=""><p>${img.caption}<p>`
             const IMAGE_FIG = document.createElement('figure');
             IMAGE_FIG.innerHTML = newImage;
             RECENTLY_VIEWED.appendChild(IMAGE_FIG);
@@ -114,5 +130,5 @@ $(document).ready(() => {
         showRecentlyViewed();
     });
 
-    window.onload = flickrSearch('Australia', 12);
+    window.onload = flickrSearch('Australian Cities', 12);
 })

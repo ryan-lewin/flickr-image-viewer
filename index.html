@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scenery Viewer</title>
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap" rel="stylesheet">
     <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -14,21 +15,25 @@
 </head>
 <body>
     <header>
-        <h1>Australian Top Images</h1>
+        <h1>Australian Cities</h1>
     </header>
     <main>
         <nav>
             <div id="nav-links">
-                <a class="nav-link" href="#" value="Sydney">Sydney</a>
-                <a class="nav-link" href="#" value="Melbourne">Melbourne</a>
-                <a class="nav-link" href="#" value="Brisbane">Brisbane</a>
+                <a class="nav-link" href="#" value="Sydney">Brisbane</a>
+                <a class="nav-link" href="#" value="Melbourne">Sydney</a>
+                <a class="nav-link" href="#" value="Brisbane">Melbourne</a>
                 <a class="nav-link" href="#" value="Adelaide">Adelaide</a>
                 <a class="nav-link" href="#" value="Perth">Perth</a>
+                <a class="home-link" href="#" value="Perth">Australian Cities</a>
             </div>
         </nav>
-        <div id="image-container"></div>
+        <div id="main-images">
+            <h4>Your Images</h4>
+            <div id="image-container"></div>
+        </div>
         <div id="recently-viewed-container">
-            <h3>Recently Viewed</h3>
+            <h4>Recently Viewed</h4>
             <div id="recently-viewed"></div>
         </div>
     </main>
